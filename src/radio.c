@@ -41,8 +41,8 @@ static uint32_t lastTailTone = 0;
 static uint32_t lastMsmUpdate = 0;
 static bool toneFound = false;
 
-const uint16_t StepFrequencyTable[15] = {
-    1,   10,  50,  100,
+const uint16_t StepFrequencyTable[16] = {
+    1,   10,  50,  100,  125,
 
     250, 500, 625, 833, 1000, 1250, 2500, 5000, 10000, 12500, 20000,
 };

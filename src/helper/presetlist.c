@@ -20,12 +20,12 @@ Preset defaultPreset = {
         },
 };
 
-Preset defaultPresets[33] = {
+Preset defaultPresets[37] = {
     (Preset){
         .band =
             {
-                .bounds = {1500000, 2999999},
-                .name = "15-30",
+                .bounds = {1500000, 2696499},
+                .name = "15-26",
                 .step = STEP_5_0kHz,
                 .modulation = MOD_AM,
                 .bw = BK4819_FILTER_BW_NARROW,
@@ -34,7 +34,7 @@ Preset defaultPresets[33] = {
                 .squelchType = SQUELCH_RSSI_NOISE_GLITCH,
             },
         .allowTx = false,
-        .lastUsedFreq = 2713500,
+        .lastUsedFreq = 1500000,
         //           50    100   140
         .powCalib = {0x32, 0x64, 0x8C},
         .radio = RADIO_BK4819,
@@ -42,8 +42,44 @@ Preset defaultPresets[33] = {
     (Preset){
         .band =
             {
-                .bounds = {3000000, 6399999},
-                .name = "30-64",
+                .bounds = {2696500, 2760124},
+                .name = "CB EU",
+                .step = STEP_10_0kHz,
+                .modulation = MOD_FM,
+                .bw = BK4819_FILTER_BW_NARROW,
+                .gainIndex = 18,
+                .squelch = 3,
+                .squelchType = SQUELCH_RSSI_NOISE_GLITCH,
+            },
+        .allowTx = false,
+        .lastUsedFreq = 2696500,
+        //           50    100   140
+        .powCalib = {0x32, 0x64, 0x8C},
+        .radio = RADIO_BK4819,
+    },
+    (Preset){
+        .band =
+            {
+                .bounds = {2760125, 2799125},
+                .name = "CB UK",
+                .step = STEP_10_0kHz,
+                .modulation = MOD_FM,
+                .bw = BK4819_FILTER_BW_NARROW,
+                .gainIndex = 18,
+                .squelch = 3,
+                .squelchType = SQUELCH_RSSI_NOISE_GLITCH,
+            },
+        .allowTx = false,
+        .lastUsedFreq = 2760125,
+        //           50    100   140
+        .powCalib = {0x32, 0x64, 0x8C},
+        .radio = RADIO_BK4819,
+    },
+    (Preset){
+        .band =
+            {
+                .bounds = {2799130, 6399999},
+                .name = "28-64",
                 .step = STEP_5_0kHz,
                 .modulation = MOD_FM,
                 .bw = BK4819_FILTER_BW_NARROW,
@@ -52,7 +88,7 @@ Preset defaultPresets[33] = {
                 .squelchType = SQUELCH_RSSI_NOISE_GLITCH,
             },
         .allowTx = false,
-        .lastUsedFreq = 3000000,
+        .lastUsedFreq = 2799130,
         //           50    100   140
         .powCalib = {0x32, 0x64, 0x8C},
         .radio = RADIO_BK4819,
@@ -240,7 +276,7 @@ Preset defaultPresets[33] = {
     (Preset){
         .band =
             {
-                .bounds = {43000000, 44000000},
+                .bounds = {43000000, 43307499},
                 .name = "70cm HAM",
                 .step = STEP_25_0kHz,
                 .modulation = MOD_FM,
@@ -251,14 +287,14 @@ Preset defaultPresets[33] = {
             },
         .allowTx = false,
         .lastUsedFreq = 43230000,
-         //           40    65   140
+        //           40    65   140
         .powCalib = {0x28, 0x41, 0x8C},
         .radio = RADIO_BK4819,
     },
     (Preset){
         .band =
             {
-                .bounds = {43307500, 43479999},
+                .bounds = {43307500, 43477500},
                 .name = "LPD",
                 .step = STEP_25_0kHz,
                 .modulation = MOD_FM,
@@ -276,8 +312,27 @@ Preset defaultPresets[33] = {
     (Preset){
         .band =
             {
-                .bounds = {43480000, 44600624},
-                .name = "435-446",
+                .bounds = {43477525, 44000000},
+                .name = "70cm HAM",
+                .step = STEP_25_0kHz,
+                .modulation = MOD_FM,
+                .bw = BK4819_FILTER_BW_WIDE,
+                .gainIndex = 18,
+                .squelch = 3,
+                .squelchType = SQUELCH_RSSI_NOISE_GLITCH,
+            },
+        .allowTx = false,
+        .lastUsedFreq = 43477525,
+        //           40    65   140
+        .powCalib = {0x28, 0x41, 0x8C},
+        .radio = RADIO_BK4819,
+    },
+    
+    (Preset){
+        .band =
+            {
+                .bounds = {44000025, 44600624},
+                .name = "440-446",
                 .step = STEP_25_0kHz,
                 .modulation = MOD_FM,
                 .bw = BK4819_FILTER_BW_WIDE,
@@ -548,6 +603,19 @@ Preset defaultPresets[33] = {
     (Preset){
         .band =
             {
+                .bounds = {181000, 200000},
+                .name = "160m HAM",
+                .step = STEP_1_0kHz,
+                .modulation = MOD_LSB,
+                .bw = BK4819_FILTER_BW_NARROW,
+                .gainIndex = 18,
+            },
+        .lastUsedFreq = 181000,
+        .radio = RADIO_SI4732,
+    },
+    (Preset){
+        .band =
+            {
                 .bounds = {350000, 380000},
                 .name = "80m HAM",
                 .step = STEP_1_0kHz,
@@ -587,7 +655,7 @@ Preset defaultPresets[33] = {
     (Preset){
         .band =
             {
-                .bounds = {2800000, 2970000},
+                .bounds = {2800000, 2969999},
                 .name = "10m HAM",
                 .step = STEP_1_0kHz,
                 .modulation = MOD_USB,
@@ -597,6 +665,7 @@ Preset defaultPresets[33] = {
         .lastUsedFreq = 2800000,
         .radio = RADIO_SI4732,
      },
+     
 };
 // char (*__defpres)[sizeof(defaultPresets)/sizeof(Preset)] = 1;
 

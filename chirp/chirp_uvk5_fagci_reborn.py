@@ -821,6 +821,7 @@ STEP_NAMES = [
     "0.1kHz",
     "0.5kHz",
     "1.0kHz",
+    "1.25kHz",
     "2.5kHz",
     "5.0kHz",
     "6.25kHz",
@@ -997,8 +998,10 @@ BANDS = {
 }
 
 # DEFAULT_BAND_NAMES = [
-#     "15-30",
-#     "30-64",
+#     "15-26",
+#     "CB EU",
+#     "CB UK",
+#     "28-64",
 #     "64-88",
 #     "Bcast FM",
 #     "108-118",
@@ -1006,12 +1009,13 @@ BANDS = {
 #     "135-144",
 #     "2m HAM",
 #     "148-174",
-#     "174-230",
-#     "230-320",
-#     "320-400",
-#     "400-433",
+#     "174-245",
+#     "Satcom",
+#     "270-430",
+#     "70cm HAM",
 #     "LPD",
-#     "435-446",
+#     "70cm HAM",
+#     "440-446",
 #     "PMR",
 #     "446-462",
 #     "FRS/G462",
@@ -1028,12 +1032,8 @@ BANDS = {
 #     "1.3-1.34",
 #     "160m HAM",
 #     "80m HAM",
-#     "60m HAM",
 #     "40m HAM",
 #     "20m HAM",
-#     "17m HAM",
-#     "15m HAM",
-#     "12m HAM",
 #     "10m HAM"
 # ]
 
@@ -1073,7 +1073,7 @@ MIN_FREQ = 153000
 MAX_FREQ = 1399999990
 
 ## SETTINGS_VF0_PRESET_SIZE = 0x3d1  #  TERRIBLE hardcoding; should get sizeof(MEM_SETTINGS)
-SETTINGS_VF0_PRESET_SIZE = 0x455  #  TERRIBLE hardcoding; should get sizeof(MEM_SETTINGS)
+SETTINGS_VF0_PRESET_SIZE = 0x4d5  #  TERRIBLE hardcoding; should get sizeof(MEM_SETTINGS)
 MEMORY_START_LOWER_LIMIT = SETTINGS_VF0_PRESET_SIZE
 
 BIT_MASK_NAMES = ["--------"]
@@ -1201,7 +1201,7 @@ struct {
      radio : 2,
      offsetDir : 2,
      power : 2;
-} Preset[33];
+} Preset[37];
 """
 
 MEM_CH = """struct {
