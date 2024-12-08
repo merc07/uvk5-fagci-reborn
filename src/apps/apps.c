@@ -21,7 +21,7 @@
 #include "vfo2.h"
 #include "vfocfg.h"
 
-#define APPS_STACK_SIZE 8
+#define APPS_STACK_SIZE 7
 
 AppType_t gCurrentApp = APP_NONE;
 
@@ -62,7 +62,7 @@ const AppType_t appsAvailableToRun[RUN_APPS_COUNT] = {
     APP_ANALYZER,     //
     APP_LOOT_LIST,    //
     APP_PRESETS_LIST, //
-    APP_MEMVIEW,      //
+    // APP_MEMVIEW,      //
     APP_GENERATOR,    //
     // APP_LEVEL,        //
     APP_ABOUT, //
@@ -70,7 +70,7 @@ const AppType_t appsAvailableToRun[RUN_APPS_COUNT] = {
 
 const App apps[APPS_COUNT] = {
     {"None", NULL, NULL, NULL, NULL, NULL},
-    {"EEPROM view", MEMVIEW_Init, NULL, MEMVIEW_Render, MEMVIEW_key, NULL},
+    //{"EEPROM view", MEMVIEW_Init, NULL, MEMVIEW_Render, MEMVIEW_key, NULL},
     {"Band scan", SPECTRUM_init, SPECTRUM_update, SPECTRUM_render, SPECTRUM_key,
      SPECTRUM_deinit},
     {"Analyzer", ANALYZER_init, ANALYZER_update, ANALYZER_render, ANALYZER_key,
@@ -107,8 +107,11 @@ bool APPS_key(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld) {
 void APPS_init(AppType_t app) {
   gCurrentApp = app;
 
+  if (gSettings.chDisplayMode != CH_DISPLAY_MODE_WT) {
   STATUSLINE_SetText("%s", apps[gCurrentApp].name);
+  }
   gRedrawScreen = true;
+  
 
   if (apps[gCurrentApp].init) {
     apps[gCurrentApp].init();

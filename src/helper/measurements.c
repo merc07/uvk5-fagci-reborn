@@ -24,6 +24,7 @@ uint32_t ConvertDomainF(uint32_t aValue, uint32_t aMin, uint32_t aMax,
   return ((aValue - aMin) * bRange + aRange / 2) / aRange + bMin;
 }
 
+/*
 uint8_t DBm2S(int dbm, bool isVHF) {
   uint8_t i = 0;
   dbm *= -1;
@@ -34,6 +35,7 @@ uint8_t DBm2S(int dbm, bool isVHF) {
   }
   return i;
 }
+*/
 
 int Rssi2DBm(uint16_t rssi) { return (rssi >> 1) - 160; }
 

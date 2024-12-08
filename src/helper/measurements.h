@@ -14,10 +14,10 @@ typedef struct {
   uint8_t gc;
 } SQL;
 
-static const uint8_t rssi2s[2][15] = {
-    {121, 115, 109, 103, 97, 91, 85, 79, 73, 63, 53, 43, 33, 23, 13},
-    {141, 135, 129, 123, 117, 111, 105, 99, 93, 83, 73, 63, 53, 43, 33},
-};
+//static const uint8_t rssi2s[2][15] = {
+//    {121, 115, 109, 103, 97, 91, 85, 79, 73, 63, 53, 43, 33, 23, 13},
+//    {141, 135, 129, 123, 117, 111, 105, 99, 93, 83, 73, 63, 53, 43, 33},
+//};
 
 long long Clamp(long long v, long long min, long long max);
 int ConvertDomain(int aValue, int aMin, int aMax, int bMin, int bMax);

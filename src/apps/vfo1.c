@@ -20,6 +20,7 @@
 
 bool gVfo1ProMode = false;
 
+static const uint8_t M[] = {100, 50, 0, 35, 100, 50, 0, 0};
 static uint8_t menuIndex = 0;
 static bool registerActive = false;
 
@@ -437,7 +438,15 @@ bool VFO1_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       }
       return true;
     case KEY_SIDE1:
-      APPS_run(APP_ANALYZER);
+      if (gSettings.chDisplayMode != CH_DISPLAY_MODE_WT) {
+        APPS_run(APP_ANALYZER);
+      } else {
+        gSettings.toneLocal=true;
+        RADIO_ToggleTX(true);
+        BK4819_PlaySequence(M);
+        RADIO_ToggleTX(false);
+        gSettings.toneLocal=false;
+      }
       return true;
     case KEY_SIDE2:
       APPS_run(APP_SPECTRUM);
@@ -551,12 +560,14 @@ static void DrawRegs(void) {
 
 void VFO1_render(void) {
   const uint8_t BASE = 42;
-
+ if (gSettings.chDisplayMode != CH_DISPLAY_MODE_WT) {
  if (gIsNumNavInput) {
     STATUSLINE_SetText("Select: %s", gNumNavInput);
   } else {
     STATUSLINE_SetText("%s:%u", gCurrentPreset->band.name,
                        PRESETS_GetChannel(gCurrentPreset, radio->rx.f) + 1);
+  }} else {
+    STATUSLINE_SetText("Battery Level");
   }
  
   VFO *vfo = &gVFO[gSettings.activeVFO];
@@ -577,18 +588,31 @@ void VFO1_render(void) {
   }
 
   if (radio->channel >= 0) {
+
+    if (gSettings.chDisplayMode != CH_DISPLAY_MODE_WT) {
+    
     PrintMediumEx(LCD_XCENTER, BASE - 16, POS_C, C_FILL,
                   gVFONames[gSettings.activeVFO]);
-  }
+  }}
 
   if (gTxState && gTxState != TX_ON) {
     PrintMediumBoldEx(LCD_XCENTER, BASE, POS_C, C_FILL, "%s",
                       TX_STATE_NAMES[gTxState]);
   } else {
+   
+    if (gSettings.chDisplayMode == CH_DISPLAY_MODE_WT) {
+      if (radio->channel >= 0) {
+      PrintMediumBoldEx(LCD_XCENTER, BASE - 16, POS_C, C_FILL, gVFONames[gSettings.activeVFO]);
+      PrintMediumEx(LCD_XCENTER, BASE - 4, POS_C, C_FILL,"TX Power: %c",
+               TX_POWER_NAMES[p->power][0]);
+      }
+      
+  } else{
     PrintBiggestDigitsEx(LCD_WIDTH - 22, BASE, POS_R, C_FILL, "%4u.%03u", fp1,
                          fp2);
     PrintBigDigitsEx(LCD_WIDTH - 1, BASE, POS_R, C_FILL, "%02u", fp3);
     PrintMediumEx(LCD_WIDTH - 1, BASE - 12, POS_R, C_FILL, mod);
+  }
   }
 
   if (gVfo1ProMode) {

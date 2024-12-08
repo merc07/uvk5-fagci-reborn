@@ -304,6 +304,7 @@ void PrintMediumBoldEx(uint8_t x, uint8_t y, TextPos posLCR, Color color,
   va_end(args);
 }
 
+
 void PrintBigDigits(uint8_t x, uint8_t y, const char *pattern, ...) {
   va_list args;
   va_start(args, pattern);

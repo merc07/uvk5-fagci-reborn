@@ -123,6 +123,7 @@ void STATUSLINE_render(void) {
     icons[idx++] = SYM_LOCK;
   }
 
+  if (gSettings.chDisplayMode != CH_DISPLAY_MODE_WT) {
   if ((gCurrentApp == APP_SAVECH || gCurrentApp == APP_VFO1 ||
        gCurrentApp == APP_VFO2 || gCurrentApp == APP_SPECTRUM ||
        gCurrentApp == APP_LOOT_LIST || gCurrentApp == APP_PRESETS_LIST)) {
@@ -132,7 +133,7 @@ void STATUSLINE_render(void) {
       PrintSmallEx(LCD_XCENTER, BASE_Y, POS_C, C_FILL, "SL %d",
                    gSettings.currentScanlist + 1);
     }
-  }
+  }}
 
   PrintSymbolsEx(LCD_WIDTH - 1 -
                      (gSettings.batteryStyle == BAT_VOLTAGE ? 38 : 18),

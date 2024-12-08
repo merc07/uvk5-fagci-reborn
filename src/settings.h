@@ -52,6 +52,7 @@ typedef enum {
   CH_DISPLAY_MODE_NF,
   CH_DISPLAY_MODE_F,
   CH_DISPLAY_MODE_N,
+  CH_DISPLAY_MODE_WT,
 } CHDisplayMode;
 
 typedef enum {
@@ -257,7 +258,7 @@ extern Settings gSettings;
 extern uint8_t BL_TIME_VALUES[7];
 extern const char *BL_TIME_NAMES[7];
 extern const char *BL_SQL_MODE_NAMES[3];
-extern const char *CH_DISPLAY_MODE_NAMES[3];
+extern const char *CH_DISPLAY_MODE_NAMES[4];
 extern const char *TX_POWER_NAMES[4];
 extern const char *TX_OFFSET_NAMES[3];
 extern const char *TX_CODE_TYPES[4];

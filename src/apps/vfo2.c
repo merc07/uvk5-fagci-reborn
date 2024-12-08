@@ -110,7 +110,7 @@ void VFO2_init(void) {
 }
 
 bool VFO2_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
-  if (VFO1_key(key, bKeyPressed, bKeyHeld)) {
+  if (VFO1_key(key, bKeyPressed, bKeyHeld) && key!=KEY_2) {
     return true;
   }
 

@@ -34,8 +34,12 @@ static void onKey(KEY_Code_t key, bool pressed, bool hold) {
     return;
   }
 
+  
   if (gSettings.keylock && (gSettings.pttLock ? true : key != KEY_PTT) &&
-      !(hold && pressed && !gRepeatHeld && key == KEY_F)) {
+      !(hold && pressed && !gRepeatHeld && key == KEY_F) &&
+      !(hold && pressed && !gRepeatHeld && key == KEY_SIDE1 && gSettings.chDisplayMode == CH_DISPLAY_MODE_WT) &&
+      !(hold && pressed && !gRepeatHeld && key == KEY_6 && gSettings.chDisplayMode == CH_DISPLAY_MODE_WT)
+      ) {
     return;
   }
 

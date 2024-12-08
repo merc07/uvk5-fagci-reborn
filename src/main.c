@@ -69,6 +69,12 @@ static void Intro(void) {
   PrintMediumBoldEx(LCD_XCENTER, LCD_YCENTER, POS_C, C_FILL, "r3b0rn");
   ST7565_Blit();
 
+  if (gSettings.chDisplayMode == CH_DISPLAY_MODE_WT) {
+    gSettings.beep=true;
+    } else {
+      gSettings.beep=false;
+    }
+  
   if (PRESETS_Load()) {
     if (gSettings.beep) {
       AUDIO_PlayTone(1400, 50);
@@ -122,7 +128,7 @@ void Main(void) {
     Boot(APP_RESET);
   } else if (KEYBOARD_Poll() == KEY_5) {
     gSettings.batteryCalibration = 2000;
-    Boot(APP_MEMVIEW);
+    // Boot(APP_MEMVIEW);
   } else {
     BATTERY_UpdateBatteryInfo();
     TaskAdd("Intro", Intro, 1, true, 5);
