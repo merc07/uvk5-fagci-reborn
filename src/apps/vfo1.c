@@ -20,7 +20,7 @@
 
 bool gVfo1ProMode = false;
 
-static const uint8_t M[] = {100, 50, 0, 35, 100, 50, 0, 0};
+static const uint8_t M[] = {100, 15, 0, 10, 120, 15, 0, 0};
 static uint8_t menuIndex = 0;
 static bool registerActive = false;
 
@@ -443,7 +443,9 @@ bool VFO1_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       } else {
         gSettings.toneLocal=true;
         RADIO_ToggleTX(true);
+        for (uint16_t i = 0; i < 3; ++i) {
         BK4819_PlaySequence(M);
+        }
         RADIO_ToggleTX(false);
         gSettings.toneLocal=false;
       }

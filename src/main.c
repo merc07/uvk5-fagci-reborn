@@ -71,6 +71,8 @@ static void Intro(void) {
 
   if (gSettings.chDisplayMode == CH_DISPLAY_MODE_WT) {
     gSettings.beep=true;
+    gSettings.keylock=true;
+    gSettings.mainApp=APP_VFO1;
     } else {
       gSettings.beep=false;
     }
