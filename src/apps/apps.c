@@ -21,7 +21,7 @@
 #include "vfo2.h"
 #include "vfocfg.h"
 
-#define APPS_STACK_SIZE 7
+#define APPS_STACK_SIZE 8
 
 AppType_t gCurrentApp = APP_NONE;
 
