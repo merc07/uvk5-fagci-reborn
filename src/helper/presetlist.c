@@ -27,7 +27,7 @@ Preset
                 .band =
                     {
                         .bounds = {1500000, 2696499},
-                        .name = "Military1",
+                        .name = "19-11mHAM",
                         .step = STEP_5_0kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_NARROW,
@@ -66,7 +66,7 @@ Preset
                 .band =
                     {
                         .bounds = {2799130, 6399999},
-                        .name = "Military2",
+                        .name = "28-64",
                         .step = STEP_12_5kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_NARROW,
@@ -79,7 +79,7 @@ Preset
                 .band =
                     {
                         .bounds = {6400000, 8799999},
-                        .name = "Military3",
+                        .name = "64-88",
                         .step = STEP_12_5kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_NARROW,
@@ -118,7 +118,7 @@ Preset
                 .band =
                     {
                         .bounds = {11800000, 13499999},
-                        .name = "Air",
+                        .name = "Airband",
                         .step = STEP_12_5kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_NARROW,
@@ -143,7 +143,7 @@ Preset
             (Preset){
                 .band =
                     {
-                        .bounds = {14400000, 14599999},
+                        .bounds = {14400000, 14799999},
                         .name = "2m HAM",
                         .step = STEP_25_0kHz,
                         .modulation = MOD_FM,
@@ -151,19 +151,6 @@ Preset
                     },
                 .allowTx = false,
                 .lastUsedFreq = 14550000,
-                .powCalib = {38, 63, 138},
-            },
-            (Preset){
-                .band =
-                    {
-                        .bounds = {14600000, 14799999},
-                        .name = "146-148",
-                        .step = STEP_25_0kHz,
-                        .modulation = MOD_FM,
-                        .bw = BK4819_FILTER_BW_WIDE,
-                    },
-                .allowTx = false,
-                .lastUsedFreq = 14600000,
                 .powCalib = {38, 63, 138},
             },
             (Preset){
@@ -212,7 +199,7 @@ Preset
                 .band =
                     {
                         .bounds = {17400000, 24499999},
-                        .name = "MSatcom1",
+                        .name = "Satcom1",
                         .step = STEP_25_0kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_WIDE,
@@ -225,7 +212,7 @@ Preset
                 .band =
                     {
                         .bounds = {24500000, 26999999},
-                        .name = "MSatcom2",
+                        .name = "Satcom2",
                         .step = STEP_25_0kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_WIDE,
@@ -238,7 +225,7 @@ Preset
                 .band =
                     {
                         .bounds = {27000000, 42999999},
-                        .name = "Military4",
+                        .name = "270-430",
                         .step = STEP_12_5kHz,
                         .modulation = MOD_AM,
                         .bw = BK4819_FILTER_BW_WIDE,
@@ -484,17 +471,7 @@ Preset
             },
 
             // si4732 presets
-            (Preset){
-                .band =
-                    {
-                        .bounds = {181000, 200000},
-                        .name = "160m HAM",
-                        .step = STEP_1_0kHz,
-                        .modulation = MOD_LSB,
-                        .bw = BK4819_FILTER_BW_NARROW,
-                    },
-                .lastUsedFreq = 181000,
-            },
+            
             (Preset){
                 .band =
                     {
@@ -505,6 +482,17 @@ Preset
                         .bw = BK4819_FILTER_BW_NARROW,
                     },
                 .lastUsedFreq = 364800,
+            },
+            (Preset){
+                .band =
+                    {
+                        .bounds = {525850, 540650},
+                        .name = "60m HAM",
+                        .step = STEP_1_0kHz,
+                        .modulation = MOD_LSB,
+                        .bw = BK4819_FILTER_BW_NARROW,
+                    },
+                .lastUsedFreq = 525850,
             },
             (Preset){
                 .band =
@@ -531,13 +519,24 @@ Preset
             (Preset){
                 .band =
                     {
-                        .bounds = {2800000, 2969999},
-                        .name = "10m HAM",
+                        .bounds = {2100000, 2145000},
+                        .name = "15m HAM",
                         .step = STEP_1_0kHz,
                         .modulation = MOD_USB,
                         .bw = BK4819_FILTER_BW_NARROW,
                     },
-                .lastUsedFreq = 2800000,
+                .lastUsedFreq = 2100000,
+            },
+            (Preset){
+                .band =
+                    {
+                        .bounds = {2489000, 2499999},
+                        .name = "12m HAM",
+                        .step = STEP_1_0kHz,
+                        .modulation = MOD_USB,
+                        .bw = BK4819_FILTER_BW_NARROW,
+                    },
+                .lastUsedFreq = 2489000,
             },
 };
 // char (*__defpres)[sizeof(defaultPresets)/sizeof(Preset)] = 1;
