@@ -8,8 +8,10 @@
 
 static uint16_t tone1Freq = 1000;
 static uint8_t power = 26;
+uint8_t pwr = 1;
 static bool paEnabled = false;
 static uint8_t bkPower = 0;
+bool ULpower = false;
 
 static void setTone1Freq(uint32_t f) { tone1Freq = f / 100; }
 
@@ -24,11 +26,11 @@ static void calcPower() {
 }
 
 static void updatePower(int8_t v) {
-  if (v > 0 && power < 255) {
-    power++;
+  if (v > 0 && power < 256-v) {
+    power=power+v;
   }
-  if (v < 0 && power > 0) {
-    power--;
+  if (v < 0 && power > 0+v) {
+    power=power+v;
   }
   calcPower();
 }
@@ -52,10 +54,12 @@ bool GENERATOR_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       gFInputCallback = RADIO_TuneTo;
       APPS_run(APP_FINPUT);
       return true;
+   /*
     case KEY_SIDE1:
       gFInputCallback = setTone1Freq;
       APPS_run(APP_FINPUT);
       return true;
+   */
     case KEY_EXIT:
       APPS_exit();
       return true;
@@ -66,17 +70,37 @@ bool GENERATOR_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
   // up-down keys
   if (bKeyPressed || (!bKeyPressed && !bKeyHeld)) {
     switch (key) {
+    
     case KEY_UP:
       RADIO_NextFreqNoClicks(true);
       return true;
     case KEY_DOWN:
       RADIO_NextFreqNoClicks(false);
       return true;
+    
     case KEY_2:
       updatePower(1);
       return true;
     case KEY_8:
       updatePower(-1);
+      return true;
+    case KEY_6:
+      if (pwr<3) {
+       pwr++ ;
+      }else{
+        pwr=1;
+      }
+      power=pwr*40+5;
+      if (pwr==3) power = 140;
+      return true;
+    case KEY_0:
+      if (ULpower==true) {
+        updatePower(+10);
+        ULpower=false;
+      }else{
+        updatePower(-10);
+        ULpower=true;
+      }
       return true;
     default:
       break;
@@ -92,4 +116,6 @@ void GENERATOR_render() {
   PrintMediumEx(LCD_XCENTER, 15 + 12, POS_C, C_FILL, "F: %uHz", tone1Freq);
   PrintMediumEx(LCD_XCENTER, 15 + 28, POS_C, C_FILL, "Pow: %u%s", power,
                 (bkPower >= 0x91 && paEnabled) ? "!!!" : "");
+  if (ULpower==true) PrintMediumEx(LCD_XCENTER, 15 + 40, POS_C, C_FILL, "Ultra Low");
+  
 }
