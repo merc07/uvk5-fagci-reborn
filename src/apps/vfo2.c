@@ -44,7 +44,7 @@ static void render2VFOPart(uint8_t i) {
   if (gIsListening && ((gSettings.dw != DW_OFF && gDW.activityOnVFO == i) ||
                        (gSettings.dw == DW_OFF && isActive))) {
     PrintMedium(0, bl, "RX");
-    UI_RSSIBar(31);
+    UI_RSSIBar(31,f);
   }
 
   if (gSettings.dw != DW_OFF && gDW.lastActiveVFO == i) {

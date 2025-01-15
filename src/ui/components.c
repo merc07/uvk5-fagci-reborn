@@ -28,7 +28,7 @@ void UI_TxBar(uint8_t y) {
   FillRect(BAR_LEFT_MARGIN, y + 2, audioW, 4, C_FILL);
 }
 
-void UI_RSSIBar(uint8_t y) {
+void UI_RSSIBar(uint8_t y, uint32_t f) {
   uint16_t rssi = RADIO_GetRSSI();
   if (rssi == 0) {
     return;
@@ -59,6 +59,24 @@ void UI_RSSIBar(uint8_t y) {
   }
 
   PrintMediumEx(LCD_WIDTH - 1, BAR_BASE, 2, true, "%d", Rssi2DBm(rssi));
+
+  uint8_t dBm=Rssi2DBm(rssi)*-1;
+ uint8_t dBmMax6=(f>=3000000) ? 93 : 73;
+ uint8_t dBmMax10=(f>=3000000) ? 33 : 13;
+   
+if ((gIsListening || dBmMax6==73) && dBm>0 && dBm<(dBmMax6+49) && y==42) { // active or <30mhz & 1VFO mode - (in 1VFO y=BASE+2)
+  if(dBm>(dBmMax6-10)){ 
+  uint8_t s=((dBm-dBmMax6)/6)+(1*((dBm-dBmMax6)%6)>0); 
+  if (dBm<dBmMax6) s=0;
+  PrintMediumEx(LCD_WIDTH - 1, LCD_HEIGHT - 4, POS_R, C_FILL, "S%u", 9-s);
+    } else {
+     uint8_t s=((dBm-dBmMax10)/10)+(1*((dBm-dBmMax10)%10)>0); 
+     if (dBm<dBmMax10) s=0;
+     PrintMediumEx(LCD_WIDTH - 1, LCD_HEIGHT - 4, POS_R, C_FILL, "S9+%u0", 6-s);
+  }
+  } 
+ 
+  
 }
 
 void drawTicks(uint8_t y, uint32_t fs, uint32_t fe, uint32_t div, uint8_t h) {

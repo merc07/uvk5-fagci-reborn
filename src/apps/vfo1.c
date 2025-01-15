@@ -445,7 +445,7 @@ void VFO1_render(void) {
   uint8_t fp3 = f % 100;
   const char *mod = modulationTypeOptions[radio->modulation];
   if (gIsListening || gVfo1ProMode) {
-    UI_RSSIBar(BASE + 2);
+    UI_RSSIBar(BASE + 2,f);
   }
 
   if (RADIO_IsChMode() && !gVfo1ProMode) {
