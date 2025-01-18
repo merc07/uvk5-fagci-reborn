@@ -83,9 +83,7 @@ static void UpdateRegMenuValue(RegisterSpec s, bool add) {
   }
 }
 
-static void setChannel(uint16_t v) {
-  RADIO_TuneToCH(v);
-}
+static void setChannel(uint16_t v) { RADIO_TuneToCH(v); }
 
 static void tuneTo(uint32_t f) {
   RADIO_TuneToSave(GetTuneF(f));
@@ -157,16 +155,6 @@ bool VFOPRO_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       return true;
     case KEY_4:
       return true;
-    case KEY_0:
-      RADIO_ToggleModulation();
-      return true;
-    case KEY_6:
-      RADIO_ToggleListeningBW();
-      return true;
-    case KEY_F:
-      gChEd = *radio;
-      APPS_run(APP_CH_CFG);
-      return true;
     case KEY_SIDE1:
       if (!gVfo1ProMode) {
         gMonitorMode = !gMonitorMode;
@@ -196,18 +184,24 @@ bool VFOPRO_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
 
   if (!bKeyPressed && !bKeyHeld) {
     switch (key) {
+    case KEY_0:
+      RADIO_ToggleModulation();
+      return true;
+    case KEY_6:
+      RADIO_ToggleListeningBW();
+      return true;
     case KEY_2:
       if (registerActive) {
         UpdateRegMenuValue(registerSpecs[menuIndex], true);
       } else {
-        IncDec8(&menuIndex, 0, ARRAY_SIZE(registerSpecs) - 1, -1);
+        IncDec8(&menuIndex, 0, ARRAY_SIZE(registerSpecs), -1);
       }
       return true;
     case KEY_8:
       if (registerActive) {
         UpdateRegMenuValue(registerSpecs[menuIndex], false);
       } else {
-        IncDec8(&menuIndex, 0, ARRAY_SIZE(registerSpecs) - 1, 1);
+        IncDec8(&menuIndex, 0, ARRAY_SIZE(registerSpecs), 1);
       }
       return true;
     case KEY_5:
@@ -279,7 +273,8 @@ bool VFO1_keyEx(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld,
       (key > KEY_0 && key < KEY_9)) {
     gSettings.currentScanlist = CHANNELS_ScanlistByKey(
         gSettings.currentScanlist, key, longHeld && !simpleKeypress);
-    SETTINGS_DelayedSave();
+    Log("toggleSL");
+    SETTINGS_Save();
     VFO1_init();
     SCAN_Start();
 
@@ -368,6 +363,9 @@ bool VFO1_keyEx(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld,
       return true;
     case KEY_F:
       gChEd = *radio;
+      if (RADIO_IsChMode()) {
+        gChEd.meta.type = TYPE_CH;
+      }
       APPS_run(APP_CH_CFG);
       return true;
     case KEY_STAR:

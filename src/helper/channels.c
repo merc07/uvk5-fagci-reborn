@@ -37,8 +37,8 @@ uint16_t CHANNELS_GetCountMax(void) {
 void CHANNELS_Load(int16_t num, CH *p) {
   if (num >= 0) {
     EEPROM_ReadBuffer(GetChannelOffset(num), p, CH_SIZE);
-    Log(">> R CH%u '%s': f=%u, radio=%u, type=%s", num, p->name, p->rxF,
-        p->radio, CH_TYPE_NAMES[p->meta.type]);
+    /* Log(">> R CH%u '%s': f=%u, radio=%u, type=%s", num, p->name, p->rxF,
+        p->radio, CH_TYPE_NAMES[p->meta.type]); */
   }
 }
 
@@ -82,24 +82,34 @@ void CHANNELS_Next(bool next) {
 }
 
 void CHANNELS_LoadScanlist(CHTypeFilter typeFilter, uint16_t scanlistMask) {
-  Log("Load SL w type_filter=%u", typeFilter);
+  // Log("Load SL w type_filter=%u", typeFilter);
   if (gSettings.currentScanlist != scanlistMask) {
     gSettings.currentScanlist = scanlistMask;
     SETTINGS_Save();
   }
   gScanlistSize = 0;
   for (int16_t i = 0; i < CHANNELS_GetCountMax(); ++i) {
-    if (0 == (typeFilter & (1 << CHANNELS_GetMeta(i).type))) {
+    CHMeta meta = CHANNELS_GetMeta(i);
+    bool isSaveFilter = typeFilter == TYPE_FILTER_BAND_SAVE ||
+                        typeFilter == TYPE_FILTER_CH_SAVE;
+    bool isEmptyChannelToSave = meta.type == TYPE_EMPTY && isSaveFilter;
+
+    bool isOurType =
+        (typeFilter & (1 << meta.type)) != 0 || isEmptyChannelToSave;
+    if (!isOurType) {
       continue;
     }
-    if (scanlistMask == SCANLIST_ALL ||
-        (CHANNELS_Scanlists(i) & scanlistMask)) {
+
+    bool isOurScanlist = (isOurType && scanlistMask == SCANLIST_ALL) ||
+                         (CHANNELS_Scanlists(i) & scanlistMask) ||
+                         isEmptyChannelToSave;
+    if (isOurScanlist) {
       gScanlist[gScanlistSize] = i;
       gScanlistSize++;
-      Log("Load CH %u in SL", i);
+      // Log("Load CH %u in SL", i);
     }
   }
-  Log("SL sz: %u", gScanlistSize);
+  // Log("SL sz: %u", gScanlistSize);
 }
 
 void CHANNELS_LoadBlacklistToLoot() {

@@ -98,25 +98,29 @@ static Measurement *updateMeasurements(void) {
   const bool isBeken = RADIO_GetRadio() == RADIO_BK4819;
   const bool isFastScanListen = isBeken && gIsListening && SCAN_IsFast();
 
-  if (isFastScanListen && Now() - lastMsmUpdate < 1000) {
+  /* if (isFastScanListen && Now() - lastMsmUpdate < 1000) {
     return msm;
-  }
+  } */
 
   if (!isBeken && Now() - lastMsmUpdate < 1000) {
     return msm;
   }
 
-  if (SCAN_IsFast()) {
+  if (SCAN_IsFast() && !gIsListening) {
+    // Log("BK4819_ResetRSSI");
     BK4819_SetFrequency(radio->rxF);
     BK4819_WriteRegister(BK4819_REG_30, 0x0200);
     BK4819_WriteRegister(BK4819_REG_30, 0xBFF1);
     SYSTEM_DelayMs(SCAN_GetTimeout()); // (X_X)
     msm->snr = BK4819_GetSNR();
+    msm->rssi = 0; // to make spectrum work after loot
   }
   if (gIsListening) {
     msm->rssi = RADIO_GetRSSI();
-    // msm->noise = BK4819_GetNoise();
-    // msm->glitch = BK4819_GetGlitch();
+    msm->noise = BK4819_GetNoise();
+    msm->glitch = BK4819_GetGlitch();
+    msm->snr = BK4819_GetSNR();
+    // Log("RNG=%u,%u,%u SNR=%u", msm->rssi, msm->noise, msm->glitch, msm->snr);
   }
   lastMsmUpdate = Now();
   msm->open = RADIO_IsSquelchOpen(msm);
@@ -204,6 +208,7 @@ static Measurement *updateMeasurements(void) {
                RADIO_GetRadio() == RADIO_BK4819) {
       rx = false;
     }
+    // Log("SVC_LISTEN toggle rx=%u(was %u), snr=%u", rx, gIsListening, msm->snr);
     RADIO_ToggleRX(rx);
   }
   return msm;
