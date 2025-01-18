@@ -26,11 +26,8 @@ static void calcPower() {
 }
 
 static void updatePower(int8_t v) {
-  if (v > 0 && power < 256-v) {
-    power=power+v;
-  }
-  if (v < 0 && power > 0+v) {
-    power=power+v;
+  if ((v > 0 && power < 256-v) || (v < 0 && power > 0+v)) {
+    power+=v;
   }
   calcPower();
 }
@@ -54,10 +51,12 @@ bool GENERATOR_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       gFInputCallback = RADIO_TuneTo;
       APPS_run(APP_FINPUT);
       return true;
+      /*
     case KEY_SIDE1:
       gFInputCallback = setTone1Freq;
       APPS_run(APP_FINPUT);
       return true;
+      */
     case KEY_EXIT:
       APPS_exit();
       return true;
@@ -81,11 +80,7 @@ bool GENERATOR_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       updatePower(-1);
       return true;
     case KEY_6:
-      if (pwr<3) {
-       pwr++ ;
-      }else{
-        pwr=1;
-      }
+      pwr=(pwr<3) ? pwr+1 : 1;
       power=pwr*40+5;
       if (pwr==3) power = 140;
       return true;
