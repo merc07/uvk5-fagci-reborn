@@ -22,6 +22,7 @@
 
 bool gVfo1ProMode = false;
 
+static bool SSB_Seek_ON = false;
 static uint8_t menuIndex = 0;
 static bool registerActive = false;
 
@@ -110,7 +111,17 @@ void VFO1_init(void) {
 }
 
 void VFO1_update(void) {
-
+  
+ 
+  if (SSB_Seek_ON) {
+    if (RADIO_GetRadio() == RADIO_SI4732 && RADIO_IsSSB()) {
+      if (Now() - gLastRender >= 125) {
+        RADIO_TuneToSave(radio->rxF + 100);
+        gRedrawScreen = true;
+      }
+    }
+  }
+  
   if (gIsListening && Now() - gLastRender >= 500 &&
       (RADIO_GetRadio() != RADIO_SI4732 || gShowAllRSSI)) {
     gRedrawScreen = true;
@@ -244,9 +255,15 @@ bool VFO1_keyEx(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld,
     bool isSsb = RADIO_IsSSB();
     switch (key) {
     case KEY_UP:
+      if (SSB_Seek_ON) {
+        SSB_Seek_ON = false;
+      }
       SCAN_ToggleDirection(true);
       return true;
     case KEY_DOWN:
+    if (SSB_Seek_ON) {
+        SSB_Seek_ON = false;
+      }
       SCAN_ToggleDirection(false);
       return true;
     case KEY_SIDE1:
@@ -336,6 +353,9 @@ bool VFO1_keyEx(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld,
       RADIO_ToggleModulation();
       return true;
     case KEY_STAR:
+      if (RADIO_GetRadio() == RADIO_SI4732 && RADIO_IsSSB()) {
+        SSB_Seek_ON = true;
+      }
       SCAN_Start();
       return true;
     case KEY_SIDE1:
@@ -392,7 +412,10 @@ bool VFO1_keyEx(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld,
       }
       break;
     case KEY_EXIT:
-      if (SVC_Running(SVC_SCAN)) {
+       if (SSB_Seek_ON) {
+        SSB_Seek_ON = false;
+       }
+       if (SVC_Running(SVC_SCAN)) {
         SCAN_Stop();
         return true;
       }

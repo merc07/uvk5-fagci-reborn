@@ -51,12 +51,12 @@ bool GENERATOR_key(KEY_Code_t key, bool bKeyPressed, bool bKeyHeld) {
       gFInputCallback = RADIO_TuneTo;
       APPS_run(APP_FINPUT);
       return true;
-      /*
+      
     case KEY_SIDE1:
-      gFInputCallback = setTone1Freq;
-      APPS_run(APP_FINPUT);
+     // gFInputCallback = setTone1Freq;
+     // APPS_run(APP_FINPUT);
       return true;
-      */
+      
     case KEY_EXIT:
       APPS_exit();
       return true;

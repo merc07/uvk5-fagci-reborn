@@ -91,7 +91,7 @@ void Main(void) {
     gSettings.batteryCalibration = 2000;
     gSettings.eepromType = pressedKey - 1;
     gSettings.backlight = 5;
-    Boot(APP_MEMVIEW);
+    //Boot(APP_MEMVIEW);
   } else if (pressedKey == KEY_EXIT || memcmp(buf, deadBuf, 2) == 0) {
     gSettings.batteryCalibration = 2000;
     gSettings.backlight = 5;
